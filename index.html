@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro BARF Calculator | Raw Food Plan</title>
+
+    <!-- 引入 Google Fonts (Inter 字体)，如果加载失败会回退到系统字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 
+         * ================= CSS 样式区域 =================
+         * 这里不再依赖任何外部框架，完全使用原生 CSS。
+         */
+
+        /* 1. CSS 变量：定义全站通用的颜色，方便统一修改 */
+        :root {
+            --primary-color: #16a34a; /* 绿色主色调 */
+            --primary-hover: #15803d; /* 按钮悬停时的深绿色 */
+            --bg-color: #f3f4f6;      /* 页面背景浅灰 */
+            --card-bg: #ffffff;       /* 卡片白底 */
+            --text-dark: #1f2937;     /*以此深灰作为正文颜色 */
+            --text-light: #6b7280;    /* 浅灰辅助文字 */
+            --border-color: #e5e7eb;  /* 边框颜色 */
+        }
+
+        /* 2. 全局重置 (Reset) */
+        * {
+            box-sizing: border-box; /* 让 padding 不会撑大元素的总宽度 */
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* 3. 布局容器 */
+        .container {
+            max-width: 1100px; /* 最大宽度 */
+            margin: 0 auto;    /* 居中 */
+            padding: 0 20px;   /* 两侧留白 */
+        }
+
+        /* 4. 顶部导航 (Navbar) */
+        nav {
+            background: var(--card-bg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span { color: var(--primary-color); }
+
+        /* 5. 主页简介 (Hero) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: var(--card-bg);
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        .hero p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* 6. 主要内容网格布局 (Grid) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 默认手机单列 */
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        /* 当屏幕宽度大于 768px (平板/电脑) 时，变为两列布局 */
+        @media (min-width: 768px) {
+            .main-grid {
+                grid-template-columns: 2fr 1fr; /* 左边占2份，右边占1份 */
+            }
+        }
+
+        /* 7. 卡片样式 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 8. 表单元素样式 */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        /* 单选框组样式 */
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+        .radio-option {
+            flex: 1;
+            position: relative;
+        }
+        .radio-option input {
+            position: absolute;
+            opacity: 0; /* 隐藏原始的小圆点 */
+            cursor: pointer;
+        }
+        .radio-box {
+            display: block;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        /* 选中状态 */
+        .radio-option input:checked + .radio-box {
+            border-color: var(--primary-color);
+            background-color: #f0fdf4; /* 浅绿背景 */
+            color: var(--primary-hover);
+        }
+        .radio-option:hover .radio-box {
+            border-color: var(--primary-color);
+        }
+
+        /* 输入框和下拉菜单 */
+        input[type="number"], select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        /* 按钮 */
+        .btn-calc {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1rem;
+        }
+        .btn-calc:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* 9. 结果展示区域 */
+        #resultSection {
+            display: none; /* 默认隐藏 */
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .total-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            text-align: center;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .total-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-hover);
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2列 */
+            gap: 1rem;
+        }
+        @media (min-width: 600px) {
+            .breakdown-grid {
+                grid-template-columns: repeat(4, 1fr); /* 大屏幕4列 */
+            }
+        }
+        .breakdown-item {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .breakdown-val { font-size: 1.25rem; font-weight: 700; }
+        .breakdown-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-light); margin-top: 5px; }
+
+        /* 10. 侧边栏样式 */
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-left: 0.75rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        .sidebar-list {
+            list-style-position: inside;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        .sidebar-list li { margin-bottom: 0.5rem; }
+
+        .warning-box {
+            background-color: #fefce8;
+            border: 1px solid #fef9c3;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+        .warning-title { color: #854d0e; font-weight: 700; margin-bottom: 0.5rem; }
+        .warning-text { color: #a16207; font-size: 0.9rem; }
+
+        /* 底部 Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--text-dark);
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">
+                <!-- SVG 图标 -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h2v6"/><path d="M10 16h4"/><path d="M16.6 5c-.6 0-1.2.2-1.6.6L12 8.6 9 5.6c-.4-.4-1-.6-1.6-.6C6 5 5 6 5 7.4c0 .8.4 1.5 1 2l6 6 6-6c.6-.5 1-1.2 1-2 0-1.4-1-2.4-2.4-2.4z"/></svg>
+                <span>PureBARF.io</span>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-light);">Simple Raw Feeder</div>
+        </div>
+    </nav>
+
+    <!-- 简介区 -->
+    <header class="hero">
+        <div class="container">
+            <h1>Calculate the Perfect <span style="color: var(--primary-color);">Raw Meal</span></h1>
+            <p>The easiest way to determine the daily BARF ratios for your cats and dogs. Natural, healthy, and precise.</p>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="container main-grid">
+        
+        <!-- 左侧：计算器 -->
+        <main class="card">
+            <div class="card-title">📊 Calculator</div>
+
+            <!-- 1. 宠物类型 -->
+            <div class="form-group">
+                <label class="form-label">1. Select Pet Type</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="petType" value="dog" checked onclick="updateActivityOptions('dog')">
+                        <span class="radio-box">🐶 Dog</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="petType" value="cat" onclick="updateActivityOptions('cat')">
+                        <span class="radio-box">🐱 Cat</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 2. 单位选择 -->
+            <div class="form-group">
+                <label class="form-label">2. Select Unit</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="unit" value="kg" checked onclick="changeUnitLabel('kg')">
+                        <span class="radio-box">KG</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="unit" value="lb" onclick="changeUnitLabel('lb')">
+                        <span class="radio-box">LB</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 3. 体重输入 -->
+            <div class="form-group">
+                <label class="form-label">3. Pet's Weight (<span id="weightUnitLabel">kg</span>)</label>
+                <input type="number" id="weightInput" placeholder="e.g. 25" step="0.1">
+            </div>
+
+            <!-- 4. 阶段选择 -->
+            <div class="form-group">
+                <label class="form-label">4. Activity Level / Life Stage</label>
+                <select id="activitySelect">
+                    <!-- JS 动态填充 -->
+                </select>
+            </div>
+
+            <button class="btn-calc" onclick="calculateBARF()">Calculate Plan</button>
+
+            <!-- 结果展示 -->
+            <div id="resultSection">
+                <h3 style="text-align: center; margin-bottom: 1rem;">Daily Feeding Amount</h3>
+                
+                <div class="total-box">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: #166534; text-transform: uppercase;">Total Per Day</div>
+                    <div class="total-num">
+                        <span id="totalAmount">0</span> <span class="unitLabel" style="font-size: 1.5rem;">kg</span>
+                    </div>
+                </div>
+
+                <div class="breakdown-grid">
+                    <div class="breakdown-item">
+                        <div class="breakdown-val" id="muscleResult">0</div>
+                        <div class="breakdown-label">Muscle (80%)</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-val" id="boneResult">0</div>
+                        <div class="breakdown-label">Bone (10%)</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-val" id="liverResult">0</div>
+                        <div class="breakdown-label">Liver (5%)</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-val" id="organResult">0</div>
+                        <div class="breakdown-label">Organs (5%)</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 右侧：侧边栏 -->
+        <aside>
+            <div class="sidebar-card">
+                <div class="sidebar-title" style="border-color: #3b82f6;">Why Go Raw?</div>
+                <p style="font-size: 0.9rem; color: #4b5563; margin-bottom: 1rem;">A Biologically Appropriate Raw Food (BARF) diet mimics what pets eat in the wild.</p>
+                <ul class="sidebar-list">
+                    <li>✨ Shinier coat & skin</li>
+                    <li>🦷 Cleaner teeth</li>
+                    <li>💩 Smaller stools</li>
+                    <li>⚡ Higher energy</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="sidebar-title">Food Sources</div>
+                <div style="font-size: 0.9rem; color: #4b5563; display: grid; gap: 0.8rem;">
+                    <div><strong>🥩 Meat:</strong> Beef, Chicken, Lamb hearts.</div>
+                    <div><strong>🦴 Bone:</strong> Chicken necks, Duck feet.</div>
+                    <div><strong>🫀 Organs:</strong> Liver, Kidney, Spleen.</div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Beginner Tips</div>
+                <p class="warning-text">Start slowly. Introduce one protein at a time. <strong>Never cook the bones</strong> (they will splinter). Consult your vet first.</p>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 PureBARF.io - Designed for Raw Feeders.</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Disclaimer: This tool is for informational purposes only.</p>
+    </footer>
+
+    <!-- ==================== JavaScript 逻辑 ==================== -->
+    <script>
+        // 1. 数据定义 (完全不变)
+        const feedingRatios = {
+            dog: [
+                { label: "Adult - Inactive / Senior (2%)", value: 0.02 },
+                { label: "Adult - Normal Activity (2.5%)", value: 0.025 },
+                { label: "Adult - Active / Working (3-4%)", value: 0.035 },
+                { label: "Puppy (2-4 months) (10%)", value: 0.10 },
+                { label: "Puppy (4-6 months) (8%)", value: 0.08 },
+                { label: "Puppy (6-12 months) (6%)", value: 0.06 }
+            ],
+            cat: [
+                { label: "Adult Cat (2-3%)", value: 0.025 },
+                { label: "Active Cat (4%)", value: 0.04 },
+                { label: "Kitten (6-10%)", value: 0.08 }
+            ]
+        };
+
+        // 2. 初始化
+        window.onload = function() {
+            updateActivityOptions('dog');
+        };
+
+        // 3. 更新下拉菜单
+        function updateActivityOptions(petType) {
+            const select = document.getElementById('activitySelect');
+            select.innerHTML = ""; 
+            const options = feedingRatios[petType];
+            options.forEach(opt => {
+                const el = document.createElement("option");
+                el.textContent = opt.label;
+                el.value = opt.value;
+                select.appendChild(el);
+            });
+        }
+
+        // 4. 切换单位文字
+        function changeUnitLabel(unit) {
+            document.getElementById('weightUnitLabel').innerText = unit;
+            const unitLabels = document.querySelectorAll('.unitLabel');
+            unitLabels.forEach(el => el.innerText = unit);
+        }
+
+        // 5. 计算逻辑
+        function calculateBARF() {
+            const weightInput = document.getElementById('weightInput').value;
+            const weight = parseFloat(weightInput);
+            const ratio = parseFloat(document.getElementById('activitySelect').value);
+
+            if (isNaN(weight) || weight <= 0) {
+                alert("Please enter a valid weight.");
+                return;
+            }
+
+            const dailyTotal = weight * ratio;
+            const muscle = dailyTotal * 0.80;
+            const bone = dailyTotal * 0.10;
+            const liver = dailyTotal * 0.05;
+            const organ = dailyTotal * 0.05;
+
+            document.getElementById('totalAmount').innerText = dailyTotal.toFixed(2);
+            document.getElementById('muscleResult').innerText = muscle.toFixed(2);
+            document.getElementById('boneResult').innerText = bone.toFixed(2);
+            document.getElementById('liverResult').innerText = liver.toFixed(2);
+            document.getElementById('organResult').innerText = organ.toFixed(2);
+
+            // 显示结果 (原生 JS 修改样式)
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
