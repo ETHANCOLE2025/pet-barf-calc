@@ -3,73 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PureBARF — Tailored meals for your pet | BARF raw feeding calculator</title>
-    <meta name="description" content="Scientific BARF (raw feeding) calculators for cats and dogs — compute feeding amounts and access feeding guides and educational resources.">
+    <title>RawDiet Calculator - Scientific BARF for Cats & Dogs | Free Tool / 生食计算器 - 猫狗科学饮食 | 免费工具</title>
+    <meta name="description" content="Free Raw Diet Calculator (BARF) for dogs and cats. Calculate daily meat, bone, and organ ratios instantly based on weight and activity.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ads and placeholders removed -->
+    <style>
+        /* 简单的淡入动画 */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
-<body class="bg-emerald-50 text-gray-800 font-sans">
+<body class="bg-emerald-50 text-gray-800 font-sans flex flex-col min-h-screen">
 
-    <!-- Navigation bar -->
-    <nav class="bg-white shadow-md">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-emerald-700">PureBARF 🐾</a>
-            <div class="hidden md:flex space-x-6">
-                    <a href="index.html" class="hover:text-emerald-600">Home</a>
-                    <a href="cat-calculator.html" class="hover:text-emerald-600">Cat Calculator</a>
-                    <a href="dog-calculator.html" class="hover:text-emerald-600">Dog Calculator</a>
-                    <a href="guide.html" class="hover:text-emerald-600">Guides</a>
+            <a href="index.html" class="text-2xl font-bold text-emerald-700 flex items-center gap-2">
+                <span>🐾</span> RawDiet
+            </a>
+            
+            <div class="flex items-center gap-4">
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-6 font-medium text-sm">
+                    <a href="index.html" class="text-emerald-600" data-i18n="nav_home">RawDiet Home</a>
+                    <a href="cat-calculator.html" class="hover:text-emerald-600 transition" data-i18n="nav_cat">Cat Calc</a>
+                    <a href="dog-calculator.html" class="hover:text-emerald-600 transition" data-i18n="nav_dog">Dog Calc</a>
+                    <a href="guide.html" class="hover:text-emerald-600 transition" data-i18n="nav_guide">Guide</a>
+                </div>
+
+                <!-- Language Selector -->
+                <select id="langSwitcher" class="bg-gray-100 border border-gray-300 text-gray-700 text-xs rounded p-1 focus:ring-emerald-500 focus:border-emerald-500">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh">🇨🇳 中文</option>
+                </select>
             </div>
-            <!-- Mobile menu button (collapsed) -->
-            <div class="md:hidden text-emerald-700">☰</div>
         </div>
     </nav>
 
-    <!-- Ads removed -->
-
     <!-- Hero Section -->
-    <header class="bg-emerald-600 text-white py-16 text-center">
+    <header class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white py-20 text-center">
         <div class="container mx-auto px-4">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Tailored nutrition for your furry friend</h1>
-            <p class="text-xl mb-8 opacity-90">Stop guessing — instantly calculate the optimal BARF (raw) feeding ratios for cats and dogs.</p>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="cat-calculator.html" class="bg-white text-emerald-700 font-bold py-3 px-8 rounded-full hover:bg-emerald-50 transition">🐱 Cat Calculator</a>
-                <a href="dog-calculator.html" class="bg-emerald-800 text-white font-bold py-3 px-8 rounded-full hover:bg-emerald-900 transition">🐶 Dog Calculator</a>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight" data-i18n="hero_title">Perfect Meals for Your Pets</h1>
+            <p class="text-xl md:text-2xl mb-10 opacity-90 max-w-2xl mx-auto" data-i18n="hero_subtitle">Stop guessing. Calculate the scientifically balanced BARF raw food ratios for your cats and dogs instantly.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="cat-calculator.html" class="bg-white text-emerald-700 font-bold py-4 px-10 rounded-full hover:bg-emerald-50 shadow-lg transition transform hover:-translate-y-1" data-i18n="btn_cat">🐱 Cat Calculator</a>
+                <a href="dog-calculator.html" class="bg-emerald-900 text-white font-bold py-4 px-10 rounded-full hover:bg-emerald-800 shadow-lg transition transform hover:-translate-y-1" data-i18n="btn_dog">🐶 Dog Calculator</a>
             </div>
         </div>
     </header>
 
-    <!-- Key benefits / Tips -->
-    <section class="py-12 container mx-auto px-4">
-        <h2 class="text-2xl font-bold text-center text-emerald-800 mb-8">Why choose BARF (raw feeding)?</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-emerald-500">
-                <h3 class="font-bold text-lg mb-2">Restore Natural Diet</h3>
-                <p class="text-gray-600">Mimics a carnivore's natural prey-based diet and provides species-appropriate nutrition.</p>
+    <!-- Features -->
+    <section class="py-16 container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-emerald-800 mb-12" data-i18n="why_title">Why Choose BARF?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md transition">
+                <div class="text-4xl mb-4">🐆</div>
+                <h3 class="font-bold text-xl mb-3 text-gray-900" data-i18n="tip1_title">Restore Nature</h3>
+                <p class="text-gray-600 leading-relaxed" data-i18n="tip1_desc">Simulate the natural prey diet structure, providing the best bioavailability for carnivores.</p>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-emerald-500">
-                <h3 class="font-bold text-lg mb-2">Shiny Coat</h3>
-                <p class="text-gray-600">Natural animal fats and high-quality proteins help keep coats smooth and glossy.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md transition">
+                <div class="text-4xl mb-4">✨</div>
+                <h3 class="font-bold text-xl mb-3 text-gray-900" data-i18n="tip2_title">Shiny Coat</h3>
+                <p class="text-gray-600 leading-relaxed" data-i18n="tip2_desc">Natural animal fats and high-quality proteins nourish the skin and fur from the inside out.</p>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-emerald-500">
-                <h3 class="font-bold text-lg mb-2">Less Smelly Waste</h3>
-                <p class="text-gray-600">Improved digestibility can reduce stool volume and unpleasant odors.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md transition">
+                <div class="text-4xl mb-4">💩</div>
+                <h3 class="font-bold text-xl mb-3 text-gray-900" data-i18n="tip3_title">Less Odor</h3>
+                <p class="text-gray-600 leading-relaxed" data-i18n="tip3_desc">High digestibility means smaller stool volume and significantly less odor.</p>
             </div>
         </div>
     </section>
 
-    <!-- Ads removed -->
-
     <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-300 py-8 mt-8">
+    <footer class="bg-gray-800 text-gray-400 py-10 mt-auto">
         <div class="container mx-auto px-4 text-center">
-            <p class="mb-4 text-sm">
-                <strong>Disclaimer:</strong> Calculator results are for reference only and do not replace professional medical advice. Consult your veterinarian before changing your pet's diet. <br>
-                Raw feeding involves bacterial risks — follow safe handling and storage practices.
+            <p class="mb-4 text-xs opacity-70 max-w-lg mx-auto leading-relaxed" data-i18n="disclaimer">
+                <strong>Disclaimer:</strong> The results provided by this calculator are for reference only. Always consult a veterinarian before changing your pet's diet. Raw feeding involves bacterial risks; handle with hygiene.
             </p>
-            <p>&copy; 2023-2024 PureBARF Calculator. All rights reserved.</p>
+            <p>&copy; 2024 RawDiet Calculator. All rights reserved.<br>© 2024年生食计算器。版权所有。</p>
         </div>
     </footer>
 
+    <!-- I18n Logic Script -->
+    <script>
+        const translations = {
+            en: {
+                nav_home: "RawDiet Home", nav_cat: "Cat Calc", nav_dog: "Dog Calc", nav_guide: "Guide",
+                hero_title: "The Ultimate Raw Diet Calculator",
+                hero_subtitle: "Stop guessing. Calculate the scientifically balanced BARF raw food ratios for your cats and dogs instantly.",
+                btn_cat: "🐱 Cat Calculator", btn_dog: "🐶 Dog Calculator",
+                why_title: "Why Choose BARF?",
+                tip1_title: "Restore Nature", tip1_desc: "Simulate the natural prey diet structure, providing the best bioavailability for carnivores.",
+                tip2_title: "Shiny Coat", tip2_desc: "Natural animal fats and high-quality proteins nourish the skin and fur from the inside out.",
+                tip3_title: "Less Odor", tip3_desc: "High digestibility means smaller stool volume and significantly less odor.",
+                disclaimer: "<strong>Disclaimer:</strong> The results provided by this calculator are for reference only. Always consult a veterinarian before changing your pet's diet."
+            },
+            es: {
+                nav_home: "Inicio", nav_cat: "Calc. Gatos", nav_dog: "Calc. Perros", nav_guide: "Guía",
+                hero_title: "The Ultimate Raw Diet Calculator",
+                hero_subtitle: "Deja de adivinar. Calcula las proporciones de dieta BARF científicamente equilibradas al instante.",
+                btn_cat: "🐱 Calc. Gatos", btn_dog: "🐶 Calc. Perros",
+                why_title: "¿Por qué elegir BARF?",
+                tip1_title: "Restaurar la Naturaleza", tip1_desc: "Simula la estructura de la dieta de presas naturales, proporcionando la mejor biodisponibilidad.",
+                tip2_title: "Pelaje Brillante", tip2_desc: "Las grasas animales naturales y las proteínas de alta calidad nutren la piel y el pelaje.",
+                tip3_title: "Menos Olor", tip3_desc: "La alta digestibilidad significa menos volumen de heces y significativamente menos olor.",
+                disclaimer: "<strong>Descargo de responsabilidad:</strong> Los resultados son solo de referencia. Consulte siempre a un veterinario."
+            },
+            ja: {
+                nav_home: "ホーム", nav_cat: "猫用計算機", nav_dog: "犬用計算機", nav_guide: "ガイド",
+                hero_title: "The Ultimate Raw Diet Calculator",
+                hero_subtitle: "推測はやめましょう。猫と犬のために科学的にバランスの取れたBARF生食比率を瞬時に計算します。",
+                btn_cat: "🐱 猫用計算機", btn_dog: "🐶 犬用計算機",
+                why_title: "なぜBARF（生食）なのか？",
+                tip1_title: "野生の本能", tip1_desc: "自然界の獲物の食事構造を模倣し、肉食動物に最適な栄養吸収を提供します。",
+                tip2_title: "輝く毛並み", tip2_desc: "天然の動物性脂肪と高品質なタンパク質が、内側から皮膚と被毛に栄養を与えます。",
+                tip3_title: "排泄物の悩み解消", tip3_desc: "高い消化吸収率は、便の量が減り、臭いも大幅に軽減されることを意味します。",
+                disclaimer: "<strong>免責事項：</strong> 計算結果はあくまで参考です。食事を変更する前に必ず獣医師に相談してください。"
+            },
+            zh: {
+                nav_home: "首页", nav_cat: "猫咪计算器", nav_dog: "狗狗计算器", nav_guide: "科普指南",
+                hero_title: "终极生食饮食计算器",
+                hero_subtitle: "拒绝盲目喂养，一键计算猫狗 BARF 生骨肉黄金比例，还原天性，回归健康。",
+                btn_cat: "🐱 猫咪计算器", btn_dog: "🐶 狗狗计算器",
+                why_title: "为什么要选择生骨肉 (BARF)?",
+                tip1_title: "还原天性", tip1_desc: "模拟猫狗在野外的捕猎饮食结构，提供最适合食肉动物的营养。",
+                tip2_title: "毛发亮泽", tip2_desc: "天然的动物脂肪和优质蛋白，让毛孩子的毛发更加柔顺亮丽。",
+                tip3_title: "便便不臭", tip3_desc: "极高的消化吸收率，显著减少排便量和异味。",
+                disclaimer: "<strong>免责声明：</strong> 本网站提供的计算结果仅供参考，不构成专业医疗建议。请务必咨询专业兽医。"
+            }
+        };
+
+        const langSwitcher = document.getElementById('langSwitcher');
+
+        function setLanguage(lang) {
+            // Fallback to 'en' if lang not found
+            if (!translations[lang]) lang = 'en';
+            
+            // Update Text
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key]; // innerHTML allows bold tags
+                }
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            // Update Select Value
+            langSwitcher.value = lang;
+            // Save preference
+            localStorage.setItem('purebarf_lang', lang);
+        }
+
+        // Init Language
+        const savedLang = localStorage.getItem('purebarf_lang');
+        const browserLang = navigator.language.slice(0, 2);
+        setLanguage(savedLang || browserLang || 'en');
+
+        // Event Listener
+        langSwitcher.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+    </script>
 </body>
 </html>

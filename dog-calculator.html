@@ -3,135 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dog BARF (raw) Calculator — PureBARF</title>
+    <title>Dog Raw Diet Calculator (BARF/PMR) - Exact Ratios</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ads and placeholders removed -->
 </head>
 <body class="bg-stone-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
     <nav class="bg-white shadow-md">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-emerald-700">PureBARF 🐶</a>
-            <div class="hidden md:flex space-x-6">
-                    <a href="index.html" class="hover:text-emerald-600">Home</a>
-                    <a href="guide.html" class="hover:text-emerald-600">Guides</a>
-            </div>
+            <a href="index.html" class="text-2xl font-bold text-emerald-700">RawDiet 🐾</a>
+            <select id="langSwitcher" class="bg-gray-100 border border-gray-300 text-xs rounded p-1">
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="ja">🇯🇵 JP</option>
+                <option value="zh">🇨🇳 ZH</option>
+            </select>
         </div>
     </nav>
 
-    <div class="container mx-auto px-4 py-8 max-w-3xl flex-grow">
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h1 class="text-2xl font-bold text-emerald-800 mb-6 flex items-center">
-                <span class="bg-stone-100 p-2 rounded-full mr-3">🍖</span> 
-                        Dog BARF (raw) Calculator (BARF / PMR)
+    <div class="container mx-auto px-4 py-10 max-w-3xl flex-grow">
+        <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-stone-100">
+            <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-8 flex items-center">
+                <span class="bg-stone-100 p-2 rounded-lg mr-3 text-2xl">🍖</span> 
+                <span data-i18n="calc_title">Dog Raw Diet Calculator (BARF) - Exact Ratios</span>
             </h1>
 
-            <form id="dogForm" class="space-y-5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form id="dogForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Dog weight</label>
-                        <div class="flex gap-2">
-                            <input type="number" id="dogWeight" step="0.1" class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="e.g. 15">
-                            <select id="dogWeightUnit" class="p-3 border border-gray-300 rounded-lg bg-white">
+                        <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="label_weight">Dog Weight (kg)</label>
+                        <div class="relative flex items-center gap-3">
+                            <input type="number" id="dogWeight" step="0.1" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 text-lg" placeholder="15">
+                            <select id="unitSelect" class="border border-gray-300 rounded px-3 py-2 text-sm bg-white" title="Units">
                                 <option value="kg">kg</option>
                                 <option value="lb">lb</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Dog condition</label>
-                        <select id="dogState" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                            <option value="0.025">Adult (maintenance 2.5%)</option>
-                            <option value="0.02">Adult (weight loss 2%)</option>
-                            <option value="0.035">Active / Working dog (3.5%)</option>
-                            <option value="0.05">Puppy (2–4 months 5–6%)</option>
-                            <option value="0.04">Puppy (4–12 months 4%)</option>
+                        <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="label_state">Dog State</label>
+                        <select id="dogState" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 bg-white">
+                            <option value="0.025" data-i18n="opt_adult">Adult (Normal 2.5%)</option>
+                            <option value="0.02" data-i18n="opt_diet">Adult (Overweight 2%)</option>
+                            <option value="0.035" data-i18n="opt_active">Working/Active (3.5%)</option>
+                            <option value="0.05" data-i18n="opt_puppy_young">Puppy (2-4 mo 5-6%)</option>
+                            <option value="0.04" data-i18n="opt_puppy_old">Puppy (4-12 mo 4%)</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
+                <div class="flex items-center space-x-3 bg-green-50 p-4 rounded-xl border border-green-100 cursor-pointer hover:bg-green-100 transition" onclick="document.getElementById('includeVeg').click()">
                     <input type="checkbox" id="includeVeg" class="w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500">
-                    <label for="includeVeg" class="text-gray-700 font-medium">Include vegetables/fruit (10%) — BARF mode</label>
+                    <label for="includeVeg" class="text-gray-700 font-bold cursor-pointer select-none" data-i18n="chk_veg">Include Veggies/Fruit (10%) - BARF</label>
                 </div>
 
-                <button type="button" onclick="calculateDog()" class="w-full bg-emerald-800 text-white font-bold py-3 rounded-lg hover:bg-emerald-900 transition">Calculate feeding amount</button>
+                <button type="button" onclick="calculateDog()" class="w-full bg-emerald-800 text-white font-bold py-4 rounded-xl hover:bg-emerald-900 transition shadow-md text-lg" data-i18n="btn_calc">Calculate</button>
             </form>
 
-            <div id="dogResult" class="hidden mt-8 border-t pt-6">
-                <h3 class="text-center text-xl font-bold text-gray-800">Daily total: <span id="dogTotal" class="text-emerald-700 text-3xl">0</span> g</h3>
-                
-                <div class="grid grid-cols-2 gap-3 mt-6 text-sm" id="breakdownGrid">
-                    <!-- JS will populate the breakdown here -->
+            <div id="dogResult" class="hidden mt-10 border-t border-gray-100 pt-8">
+                <div class="text-center mb-8">
+                    <h3 class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1" data-i18n="res_total">Daily Intake</h3>
+                    <div class="text-5xl font-extrabold text-emerald-700"><span id="dogTotal">0</span> <span class="text-2xl text-emerald-500">g</span></div>
                 </div>
+                <div class="grid grid-cols-2 gap-4 mt-6 text-sm md:text-base" id="breakdownGrid"></div>
             </div>
         </div>
 
-        <!-- Ads removed -->
-
-        <!-- Educational collapsible sections -->
-        <div class="space-y-4">
-            <details class="bg-white p-4 rounded-lg shadow-sm group">
-                <summary class="font-bold cursor-pointer list-none flex justify-between text-emerald-800">
-                    🥦 What vegetables can dogs eat?
-                    <span class="transition group-open:rotate-180">▼</span>
+        <!-- Accordion -->
+        <div class="space-y-4 mt-10">
+            <details class="bg-white p-5 rounded-xl shadow-sm group border border-stone-100">
+                <summary class="font-bold cursor-pointer list-none flex justify-between text-emerald-800 items-center">
+                    <span class="flex items-center gap-2" data-i18n="faq_veg_q">🥦 Safe Vegetables?</span>
+                    <span class="transition group-open:rotate-180 text-emerald-500">▼</span>
                 </summary>
-                <div class="mt-3 text-gray-600 text-sm leading-relaxed">
-                    Recommended: broccoli, carrot, pumpkin (cooked), spinach (small amounts), blueberries, apples (cored).<br>
-                    *Tip: Vegetables should be pureed — dogs find whole plant fibers harder to digest.
+                <div class="mt-4 text-gray-600 text-sm leading-relaxed pl-2 border-l-2 border-emerald-200" data-i18n="faq_veg_a">
+                    Good: Broccoli, Carrots, Pumpkin (cooked), Spinach (small amount), Blueberries, Apples (no seeds). *Blend into puree for digestion.
                 </div>
             </details>
 
-            <details class="bg-white p-4 rounded-lg shadow-sm group">
-                <summary class="font-bold cursor-pointer list-none flex justify-between text-red-800">
-                    🚫 Foods to never feed
-                    <span class="transition group-open:rotate-180">▼</span>
+            <details class="bg-white p-5 rounded-xl shadow-sm group border border-stone-100">
+                <summary class="font-bold cursor-pointer list-none flex justify-between text-red-800 items-center">
+                    <span class="flex items-center gap-2" data-i18n="faq_bad_q">🚫 Toxic Foods</span>
+                    <span class="transition group-open:rotate-180 text-red-500">▼</span>
                 </summary>
-                <div class="mt-3 text-gray-600 text-sm leading-relaxed">
-                    Absolutely avoid: onions, large amounts of garlic, grapes/raisins (can cause kidney failure), chocolate, xylitol, and cooked bones (risk of splinters).
+                <div class="mt-4 text-gray-600 text-sm leading-relaxed pl-2 border-l-2 border-red-200" data-i18n="faq_bad_a">
+                    NEVER FEED: Onions, Garlic (large amount), Grapes/Raisins, Chocolate, Xylitol, Cooked Bones.
                 </div>
             </details>
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm mt-auto">
-        <p>The calculator is for reference only — follow your veterinarian's guidance.</p>
-    </footer>
-
     <script>
+        const translations = {
+            en: {
+                calc_title: "Dog Raw Diet Calculator (BARF) - Exact Ratios", label_weight: "Dog Weight (kg)", label_state: "Dog State",
+                opt_adult: "Adult (Normal 2.5%)", opt_diet: "Adult (Overweight 2%)", opt_active: "Working/Active (3.5%)", opt_puppy_young: "Puppy (2-4 mo 5-6%)", opt_puppy_old: "Puppy (4-12 mo 4%)",
+                chk_veg: "Include Veggies/Fruit (10%) - BARF", btn_calc: "Calculate", res_total: "Daily Intake",
+                faq_veg_q: "🥦 Safe Vegetables?", faq_veg_a: "Good: Broccoli, Carrots, Pumpkin (cooked), Spinach (small amount), Blueberries. *Puree them.",
+                faq_bad_q: "🚫 Toxic Foods", faq_bad_a: "NEVER FEED: Onions, Grapes/Raisins, Chocolate, Cooked Bones.",
+                txt_muscle: "🥩 Muscle", txt_bone: "🦴 Bone", txt_liver: "🐔 Liver", txt_organ: "🧠 Organ", txt_veg: "🥦 Veggies"
+            },
+            es: {
+                calc_title: "Calculadora Dieta Cruda para Perros (BARF)", label_weight: "Peso (kg)", label_state: "Estado",
+                opt_adult: "Adulto (Normal 2.5%)", opt_diet: "Adulto (Dieta 2%)", opt_active: "Activo (3.5%)", opt_puppy_young: "Cachorro (2-4m 5-6%)", opt_puppy_old: "Cachorro (4-12m 4%)",
+                chk_veg: "Incluir Verduras/Fruta (10%)", btn_calc: "Calcular", res_total: "Ingesta Diaria",
+                faq_veg_q: "🥦 ¿Verduras Seguras?", faq_veg_a: "Bien: Brócoli, Zanahorias, Calabaza (cocida), Arándanos. *Hacer puré.",
+                faq_bad_q: "🚫 Alimentos Tóxicos", faq_bad_a: "NUNCA: Cebolla, Uvas, Chocolate, Huesos Cocidos.",
+                txt_muscle: "🥩 Carne", txt_bone: "🦴 Hueso", txt_liver: "🐔 Hígado", txt_organ: "🧠 Víscera", txt_veg: "🥦 Verdura"
+            },
+            de: {
+                calc_title: "Hunde Rohe Ernährung Rechner (BARF) - Genaues Verhältnis", label_weight: "Hund Gewicht (kg)", label_state: "Hund Zustand",
+                opt_adult: "Erwachsen (Normal 2.5%)", opt_diet: "Übergewicht (2%)", opt_active: "Arbeitend/Aktiv (3.5%)", opt_puppy_young: "Welpe (2-4m 5-6%)", opt_puppy_old: "Welpe (4-12m 4%)",
+                chk_veg: "Gemüse/Obst beifügen (10%) - BARF", btn_calc: "Berechnen", res_total: "Tagesbedarf",
+                faq_veg_q: "🥦 Sichere Gemüse?", faq_veg_a: "Gut: Brokkoli, Karotten, Kürbis (gekocht), Spinat (kleine Menge), Blaubeeren.",
+                faq_bad_q: "🚫 Giftige Lebensmittel", faq_bad_a: "NIE FÜTTERN: Zwiebeln, Weintrauben/Rosinen, Schokolade, Xylitol, Gekochte Knochen.",
+                txt_muscle: "🥩 Muskel", txt_bone: "🦴 Knochen", txt_liver: "🐔 Leber", txt_organ: "🧠 Innereien", txt_veg: "🥦 Gemüse"
+            },
+            ja: {
+                calc_title: "犬用生食 (BARF) 計算機", label_weight: "体重 (kg)", label_state: "状態",
+                opt_adult: "成犬 (通常 2.5%)", opt_diet: "成犬 (ダイエット 2%)", opt_active: "活動的 (3.5%)", opt_puppy_young: "子犬 (2-4ヶ月 5-6%)", opt_puppy_old: "子犬 (4-12ヶ月 4%)",
+                chk_veg: "野菜・果物を含める (10%)", btn_calc: "計算する", res_total: "1日の総量",
+                faq_veg_q: "🥦 安全な野菜は？", faq_veg_a: "推奨：ブロッコリー、人参、かぼちゃ（加熱）、ブルーベリー。*消化のためペースト状に。",
+                faq_bad_q: "🚫 危険な食べ物", faq_bad_a: "禁止：玉ねぎ、ぶどう、チョコレート、加熱した骨。",
+                txt_muscle: "🥩 筋肉", txt_bone: "🦴 食用骨", txt_liver: "🐔 レバー", txt_organ: "🧠 内臓", txt_veg: "🥦 野菜"
+            },
+            zh: {
+                calc_title: "狗狗生骨肉 (Raw Diet) 计算器", label_weight: "狗狗体重 (kg)", label_state: "狗狗状态",
+                opt_adult: "成犬 (正常 2.5%)", opt_diet: "成犬 (需减肥 2%)", opt_active: "工作犬 (3.5%)", opt_puppy_young: "幼犬 (2-4个月 5-6%)", opt_puppy_old: "幼犬 (4-12个月 4%)",
+                chk_veg: "包含蔬菜水果 (10%)", btn_calc: "计算喂食量", res_total: "每日需喂食",
+                faq_veg_q: "🥦 狗狗能吃什么蔬菜？", faq_veg_a: "推荐：西兰花、胡萝卜、南瓜（煮熟）、蓝莓。*建议打成泥。",
+                faq_bad_q: "🚫 绝对禁食清单", faq_bad_a: "绝对不可喂食：洋葱、葡萄、巧克力、熟骨头。",
+                txt_muscle: "🥩 肌肉", txt_bone: "🦴 食用骨", txt_liver: "🐔 肝脏", txt_organ: "🧠 其他内脏", txt_veg: "🥦 蔬果"
+            }
+        };
+
+        const langSwitcher = document.getElementById('langSwitcher');
+
+        function setLanguage(lang) {
+            if (!translations[lang]) lang = 'en';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            langSwitcher.value = lang;
+            localStorage.setItem('purebarf_lang', lang);
+        }
+
+        langSwitcher.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+            // Re-calculate if result is already showing to update labels
+            if(!document.getElementById('dogResult').classList.contains('hidden')) calculateDog();
+        });
+        
+        const savedLang = localStorage.getItem('purebarf_lang') || 'en'; // English-first default
+        setLanguage(savedLang);
+
+        // Unit toggle (kg / lb) - keep internal calculations in kilograms
+        const unitSelect = document.getElementById('unitSelect');
+        const savedUnit = localStorage.getItem('unit_pref') || 'kg';
+        unitSelect.value = savedUnit;
+
+        function toKg(value, unit) {
+            if (!value) return 0;
+            if (unit === 'lb') return parseFloat(value) / 2.20462;
+            return parseFloat(value);
+        }
+
+        function toDisplay(valueKg, unit) {
+            if (unit === 'lb') return (valueKg * 2.20462).toFixed(2);
+            return valueKg;
+        }
+
+        unitSelect.addEventListener('change', (e) => {
+            const prev = localStorage.getItem('unit_pref') || 'kg';
+            const next = e.target.value;
+            const inp = document.getElementById('dogWeight');
+            const currentVal = parseFloat(inp.value);
+            if (!isNaN(currentVal)) {
+                let kgs = toKg(currentVal, prev);
+                const newDisplay = toDisplay(kgs, next);
+                inp.value = newDisplay;
+            }
+            localStorage.setItem('unit_pref', next);
+        });
+
         function calculateDog() {
             const weight = parseFloat(document.getElementById('dogWeight').value);
             const ratio = parseFloat(document.getElementById('dogState').value);
             const hasVeg = document.getElementById('includeVeg').checked;
+            const lang = langSwitcher.value; // Get current lang for result labels
+            const t = translations[lang] || translations['en'];
 
-            if (!weight) { alert('Please enter your dog\'s weight'); return; }
-
-            // Convert from lb -> kg if unit selected as pounds
-            const unit = document.getElementById('dogWeightUnit').value;
-            let weightKg = weight;
-            if (unit === 'lb') {
-                weightKg = weight * 0.45359237; // lb to kg
+            if (!weight) {
+                const msgs = {en: "Enter weight", es: "Ingrese peso", ja: "体重を入力", zh: "请输入体重", de: "Bitte Gewicht eingeben"};
+                alert(msgs[langSwitcher.value] || "Enter weight");
+                return;
             }
+
+            // convert to kg first
+            const unit = document.getElementById('unitSelect').value || 'kg';
+            const weightKg = toKg(weight, unit);
 
             const total = weightKg * 1000 * ratio;
             let breakdownHtml = '';
-
+            const itemClass = "p-4 rounded-lg flex flex-col justify-center items-center text-center shadow-sm";
+            
             if (hasVeg) {
-                // BARF mode: 70% muscle, 10% bone, 5% liver, 5% other organs, 10% veg
                 breakdownHtml += `
-                    <div class="bg-red-50 p-3 rounded">🥩 Muscle: <b>${Math.round(total * 0.7)}g</b></div>
-                    <div class="bg-yellow-50 p-3 rounded">🦴 Edible bone: <b>${Math.round(total * 0.1)}g</b></div>
-                    <div class="bg-purple-50 p-3 rounded">🐔 Liver: <b>${Math.round(total * 0.05)}g</b></div>
-                    <div class="bg-blue-50 p-3 rounded">🧠 Other organs: <b>${Math.round(total * 0.05)}g</b></div>
-                    <div class="bg-green-50 p-3 rounded col-span-2 text-center">🥦 Veg/Fruit: <b>${Math.round(total * 0.1)}g</b></div>
+                    <div class="${itemClass} bg-red-50 text-red-800"><span class="font-bold text-lg block">${Math.round(total * 0.7)}g</span><span class="text-xs">${t.txt_muscle}</span></div>
+                    <div class="${itemClass} bg-amber-50 text-amber-800"><span class="font-bold text-lg block">${Math.round(total * 0.1)}g</span><span class="text-xs">${t.txt_bone}</span></div>
+                    <div class="${itemClass} bg-purple-50 text-purple-800"><span class="font-bold text-lg block">${Math.round(total * 0.05)}g</span><span class="text-xs">${t.txt_liver}</span></div>
+                    <div class="${itemClass} bg-blue-50 text-blue-800"><span class="font-bold text-lg block">${Math.round(total * 0.05)}g</span><span class="text-xs">${t.txt_organ}</span></div>
+                    <div class="${itemClass} bg-green-50 text-green-800 col-span-2"><span class="font-bold text-lg block">${Math.round(total * 0.1)}g</span><span class="text-xs">${t.txt_veg}</span></div>
                 `;
             } else {
-                // PMR mode: 80% muscle, 10% bone, 5% liver, 5% other organs
                 breakdownHtml += `
-                    <div class="bg-red-50 p-3 rounded">🥩 Muscle: <b>${Math.round(total * 0.8)}g</b></div>
-                    <div class="bg-yellow-50 p-3 rounded">🦴 Edible bone: <b>${Math.round(total * 0.1)}g</b></div>
-                    <div class="bg-purple-50 p-3 rounded">🐔 Liver: <b>${Math.round(total * 0.05)}g</b></div>
-                    <div class="bg-blue-50 p-3 rounded">🧠 Other organs: <b>${Math.round(total * 0.05)}g</b></div>
+                    <div class="${itemClass} bg-red-50 text-red-800"><span class="font-bold text-lg block">${Math.round(total * 0.8)}g</span><span class="text-xs">${t.txt_muscle}</span></div>
+                    <div class="${itemClass} bg-amber-50 text-amber-800"><span class="font-bold text-lg block">${Math.round(total * 0.1)}g</span><span class="text-xs">${t.txt_bone}</span></div>
+                    <div class="${itemClass} bg-purple-50 text-purple-800"><span class="font-bold text-lg block">${Math.round(total * 0.05)}g</span><span class="text-xs">${t.txt_liver}</span></div>
+                    <div class="${itemClass} bg-blue-50 text-blue-800"><span class="font-bold text-lg block">${Math.round(total * 0.05)}g</span><span class="text-xs">${t.txt_organ}</span></div>
                 `;
             }
 

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RawDiet Knowledge Base</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 文章样式优化 */
+        .prose h2 { font-size: 1.5rem; font-weight: 800; color: #065f46; margin-top: 2rem; margin-bottom: 1rem; }
+        .prose p { margin-bottom: 1.2rem; line-height: 1.7; color: #374151; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .prose li { margin-bottom: 0.5rem; }
+        /* 默认隐藏所有内容块 */
+        .lang-content { display: none; }
+        /* 激活状态 */
+        .lang-content.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-emerald-50 font-sans min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-emerald-700">RawDiet 🐾</a>
+            <div class="flex gap-4 items-center">
+                <a href="guide.html" class="hidden md:block text-emerald-600 font-bold text-sm hover:underline">← Back</a>
+                <select id="langSwitcher" class="bg-gray-100 border border-gray-300 text-xs rounded p-1">
+                    <option value="en">🇺🇸 EN</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="ja">🇯🇵 JP</option>
+                    <option value="zh">🇨🇳 ZH</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-10 max-w-3xl flex-grow">
+        
+        <!-- 文章容器：AI 生成的内容将放在这里 -->
+        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
+            
+            <!-- 1. 英文内容块 -->
+            <article id="content-en" class="lang-content prose lg:prose-xl">
+                <!-- 占位符：英文内容 -->
+                <h1 class="text-3xl font-bold mb-4">Article Title Here</h1>
+                <p>Content goes here...</p>
+            </article>
+
+            <!-- 2. 西班牙语内容块 -->
+            <article id="content-es" class="lang-content prose lg:prose-xl">
+                <!-- 占位符：西班牙语内容 -->
+            </article>
+
+            <!-- 3. 日语内容块 -->
+            <article id="content-ja" class="lang-content prose lg:prose-xl">
+                <!-- 占位符：日语内容 -->
+            </article>
+
+            <!-- 4. 中文内容块 -->
+            <article id="content-zh" class="lang-content prose lg:prose-xl">
+                <!-- 占位符：中文内容 -->
+            </article>
+
+        </div>
+
+        <!-- 底部引流卡片 (多语言) -->
+        <div class="mt-12 bg-emerald-800 rounded-2xl p-8 text-center text-white shadow-lg">
+            <h3 class="text-xl font-bold mb-4" data-i18n="cta_title">Want exact calculations?</h3>
+            <div class="flex justify-center gap-4">
+                <a href="cat-calculator.html" class="bg-white text-emerald-800 font-bold py-2 px-6 rounded-full text-sm">🐱 Cat Calc</a>
+                <a href="dog-calculator.html" class="border border-white text-white font-bold py-2 px-6 rounded-full text-sm">🐶 Dog Calc</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 text-center text-sm mt-12">
+        <p>&copy; 2024 RawDiet Calculator. All rights reserved.<br>© 2024年生食计算器。版权所有。</p>
+    </footer>
+
+    <script>
+        // 底部 CTA 的简单翻译
+        const ctaTrans = {
+            en: "Want exact calculations?",
+            es: "¿Quieres cálculos exactos?",
+            ja: "正確な給餌量を知りたいですか？",
+            zh: "想要获取精准的喂食比例？"
+        };
+
+        const langSwitcher = document.getElementById('langSwitcher');
+
+        function setLanguage(lang) {
+            // 1. 隐藏所有文章块
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+            
+            // 2. 显示对应语言的文章块 (如果没有对应语言，回退到英文)
+            const targetEl = document.getElementById(`content-${lang}`) || document.getElementById('content-en');
+            if(targetEl) targetEl.classList.add('active');
+
+            // 3. 更新 CTA 文字
+            const ctaTitle = document.querySelector('[data-i18n="cta_title"]');
+            if(ctaTitle && ctaTrans[lang]) ctaTitle.innerText = ctaTrans[lang];
+
+            // 4. 保存状态
+            langSwitcher.value = lang;
+            localStorage.setItem('purebarf_lang', lang);
+        }
+
+        langSwitcher.addEventListener('change', (e) => setLanguage(e.target.value));
+        const savedLang = localStorage.getItem('purebarf_lang') || navigator.language.slice(0, 2);
+        setLanguage(savedLang);
+    </script>
+</body>
+</html>

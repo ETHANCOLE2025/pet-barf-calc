@@ -3,172 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat BARF (raw) Calculator — PureBARF</title>
+    <title>Cat Raw Diet Calculator (BARF) - Exact Ratios</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ads and placeholders removed -->
 </head>
 <body class="bg-emerald-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
     <nav class="bg-white shadow-md">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-emerald-700">PureBARF 🐱</a>
-            <div class="hidden md:flex space-x-6">
-                    <a href="index.html" class="hover:text-emerald-600">Home</a>
-                    <a href="guide.html" class="hover:text-emerald-600">Guides</a>
-            </div>
+            <a href="index.html" class="text-2xl font-bold text-emerald-700">RawDiet 🐾</a>
+            <select id="langSwitcher" class="bg-gray-100 border border-gray-300 text-xs rounded p-1">
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="ja">🇯🇵 JP</option>
+                <option value="zh">🇨🇳 ZH</option>
+            </select>
         </div>
     </nav>
 
     <div class="container mx-auto px-4 py-8 flex-grow">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             
-            <!-- Left column: calculator core -->
+            <!-- Calculator -->
             <div class="lg:col-span-2">
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h1 class="text-2xl font-bold text-emerald-800 mb-6 flex items-center">
-                        <span class="bg-emerald-100 p-2 rounded-full mr-3">🥩</span> 
-                        Cat BARF Feeding Calculator
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-emerald-100">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6 flex items-center gap-3">
+                        <span class="bg-emerald-100 p-2 rounded-lg text-2xl">🥩</span> 
+                        <span data-i18n="calc_title">Cat BARF Calculator</span>
                     </h1>
                     
-                    <form id="catForm" class="space-y-4">
+                    <form id="catForm" class="space-y-5">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Cat weight</label>
-                            <div class="flex gap-2">
-                                <input type="number" id="weight" step="0.1" class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. 4.5">
-                                <select id="weightUnit" class="p-3 border border-gray-300 rounded-lg bg-white">
+                            <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="label_weight">Cat Weight (kg)</label>
+                            <div class="relative flex items-center gap-3">
+                                <input type="number" id="weight" step="0.1" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-lg" placeholder="4.5">
+                                <select id="unitSelect" class="border border-gray-300 rounded px-3 py-2 text-sm bg-white" title="Units">
                                     <option value="kg">kg</option>
                                     <option value="lb">lb</option>
                                 </select>
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Life stage</label>
-                                <select id="age" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <option value="0.03">Adult (maintenance)</option>
-                                        <option value="0.06">Kitten (growth 4–12 months)</option>
-                                        <option value="0.08">Kitten (rapid growth &lt; 4 months)</option>
-                                        <option value="0.025">Senior / weight loss</option>
+                                <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="label_age">Life Stage</label>
+                                <select id="age" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <option value="0.03" data-i18n="opt_adult">Adult (Maintenance - 3%)</option>
+                                    <option value="0.06" data-i18n="opt_kitten_old">Kitten (4-12 mo - 6%)</option>
+                                    <option value="0.08" data-i18n="opt_kitten_young">Kitten (<4 mo - 8%)</option>
+                                    <option value="0.025" data-i18n="opt_senior">Senior/Diet (2.5%)</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Activity level</label>
-                                <select id="activity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <option value="1">Normal activity</option>
-                                    <option value="1.1">High activity (energetic / intact)</option>
-                                    <option value="0.9">Low activity (sedentary / spayed/neutered)</option>
+                                <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="label_activity">Activity Level</label>
+                                <select id="activity" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <option value="1" data-i18n="act_normal">Normal</option>
+                                    <option value="1.1" data-i18n="act_high">High (Active/Unfixed)</option>
+                                    <option value="0.9" data-i18n="act_low">Low (Lazy/Neutered)</option>
                                 </select>
                             </div>
                         </div>
 
-                        <button type="button" onclick="calculateCat()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition transform active:scale-95">Calculate</button>
+                        <button type="button" onclick="calculateCat()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition shadow-md text-lg" data-i18n="btn_calc">Calculate</button>
                     </form>
 
-                        <!-- Results display area -->
-                    <div id="resultArea" class="hidden mt-8 border-t pt-6 animate-fade-in">
-                        <!-- Inline ads removed -->
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Daily recommended total: <span id="totalFood" class="text-emerald-600 text-3xl">0</span> g</h3>
-                        <p class="text-sm text-gray-500 mb-4">Recommend splitting into 2–3 meals daily</p>
-
-                        <!-- Composition cards -->
-                        <div class="space-y-3">
-                            <!-- Muscle -->
-                            <div class="bg-red-50 p-4 rounded-lg flex justify-between items-center">
-                                <div>
-                                    <span class="font-bold text-red-800 block">🥩 Muscle (80%)</span>
-                                    <span class="text-xs text-red-600">Includes heart, breast, duck leg, etc.</span>
-                                </div>
-                                <span id="muscleWeight" class="text-xl font-bold text-red-700">0g</span>
-                            </div>
-                            <!-- Bone -->
-                            <div class="bg-yellow-50 p-4 rounded-lg flex justify-between items-center">
-                                <div>
-                                    <span class="font-bold text-yellow-800 block">🦴 Edible bone (10%)</span>
-                                    <span class="text-xs text-yellow-600">E.g. chicken necks, wing middles — mainly bone content</span>
-                                </div>
-                                <span id="boneWeight" class="text-xl font-bold text-yellow-700">0g</span>
-                            </div>
-                            <!-- Liver -->
-                            <div class="bg-purple-50 p-4 rounded-lg flex justify-between items-center">
-                                <div>
-                                    <span class="font-bold text-purple-800 block">🐔 Liver (5%)</span>
-                                    <span class="text-xs text-purple-600">Chicken liver, duck liver</span>
-                                </div>
-                                <span id="liverWeight" class="text-xl font-bold text-purple-700">0g</span>
-                            </div>
-                            <!-- Other organs -->
-                            <div class="bg-blue-50 p-4 rounded-lg flex justify-between items-center">
-                                <div>
-                                    <span class="font-bold text-blue-800 block">🧠 Other organs (5%)</span>
-                                    <span class="text-xs text-blue-600">Kidney, spleen, pancreas</span>
-                                </div>
-                                <span id="otherOrganWeight" class="text-xl font-bold text-blue-700">0g</span>
-                            </div>
+                    <!-- Results -->
+                    <div id="resultArea" class="hidden mt-10 border-t border-gray-100 pt-8">
+                        <div class="text-center mb-8">
+                             <h3 class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1" data-i18n="res_total">Daily Intake</h3>
+                             <div class="text-5xl font-extrabold text-emerald-600"><span id="totalFood">0</span> <span class="text-2xl text-emerald-400">g</span></div>
                         </div>
 
-                        <div class="mt-4 p-4 bg-yellow-100 rounded text-sm text-yellow-800">
-                            <strong>⚠️ Important supplements:</strong> Taurine, vitamin E, fish oil. For long-term feeding consider iodine (kelp powder) and manganese.
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-red-50 p-5 rounded-xl border border-red-100 flex justify-between items-center">
+                                <div><span class="font-bold text-red-900 block text-lg" data-i18n="item_muscle">🥩 Muscle Meat</span><span class="text-xs text-red-600 font-medium bg-red-100 px-2 py-0.5 rounded-full">80%</span></div>
+                                <span id="muscleWeight" class="text-2xl font-bold text-red-700">0g</span>
+                            </div>
+                            <div class="bg-amber-50 p-5 rounded-xl border border-amber-100 flex justify-between items-center">
+                                <div><span class="font-bold text-amber-900 block text-lg" data-i18n="item_bone">🦴 Raw Bone</span><span class="text-xs text-amber-600 font-medium bg-amber-100 px-2 py-0.5 rounded-full">10%</span></div>
+                                <span id="boneWeight" class="text-2xl font-bold text-amber-700">0g</span>
+                            </div>
+                            <div class="bg-purple-50 p-5 rounded-xl border border-purple-100 flex justify-between items-center">
+                                <div><span class="font-bold text-purple-900 block text-lg" data-i18n="item_liver">🐔 Liver</span><span class="text-xs text-purple-600 font-medium bg-purple-100 px-2 py-0.5 rounded-full">5%</span></div>
+                                <span id="liverWeight" class="text-2xl font-bold text-purple-700">0g</span>
+                            </div>
+                            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 flex justify-between items-center">
+                                <div><span class="font-bold text-blue-900 block text-lg" data-i18n="item_organ">🧠 Other Organs</span><span class="text-xs text-blue-600 font-medium bg-blue-100 px-2 py-0.5 rounded-full">5%</span></div>
+                                <span id="otherOrganWeight" class="text-2xl font-bold text-blue-700">0g</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-yellow-50 rounded text-sm text-yellow-800" data-i18n="warning">
+                             ⚠️ <strong>Must Add:</strong> Taurine, Vitamin E, Fish Oil.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right sidebar content (ads removed) -->
+            <!-- Sidebar -->
             <div class="lg:col-span-1 space-y-6">
-                <div class="bg-white p-4 rounded-xl shadow-sm">
-                    <h3 class="font-bold text-gray-700 mb-3">Recommended</h3>
-                    <!-- Sidebar ads removed -->
-                </div>
-                
-                <div class="bg-white p-4 rounded-xl shadow-sm">
-                    <h3 class="font-bold text-gray-700 mb-3">Read more</h3>
-                    <ul class="space-y-2 text-sm text-emerald-700">
-                        <li><a href="#" class="hover:underline">👉 Why isn't my cat drinking water?</a></li>
-                        <li><a href="#" class="hover:underline">👉 Beginner's guide to cutting meat</a></li>
-                        <li><a href="#" class="hover:underline">👉 Common supplements checklist</a></li>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100" data-i18n="sidebar_title">Recommended Reading</h3>
+                    <ul class="space-y-4">
+                        <li><a href="guide.html" class="block group"><span class="font-medium text-emerald-700 transition" data-i18n="link_1">👉 Beginners Guide to BARF</span></a></li>
+                        <li><a href="guide.html" class="block group"><span class="font-medium text-emerald-700 transition" data-i18n="link_2">👉 5 Common Mistakes</span></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm mt-auto">
-        <p>This calculator is for reference only; follow your veterinarian's guidance.</p>
-    </footer>
-
     <script>
+        // Translations
+        const translations = {
+            en: {
+                calc_title: "Cat Raw Diet Calculator (BARF) - Exact Ratios", label_weight: "Cat Weight (kg)", label_age: "Life Stage", label_activity: "Activity Level",
+                opt_adult: "Adult (Maintenance - 3%)", opt_kitten_old: "Kitten (4-12 mo - 6%)", opt_kitten_young: "Kitten (<4 mo - 8%)", opt_senior: "Senior/Diet (2.5%)",
+                act_normal: "Normal", act_high: "High (Active)", act_low: "Low (Lazy)",
+                btn_calc: "Calculate", res_total: "Daily Intake",
+                item_muscle: "🥩 Muscle Meat", item_bone: "🦴 Raw Bone", item_liver: "🐔 Liver", item_organ: "🧠 Other Organs",
+                warning: "⚠️ <strong>Must Add:</strong> Taurine, Vitamin E, Fish Oil.",
+                sidebar_title: "Recommended Reading", link_1: "👉 Beginners Guide to BARF", link_2: "👉 5 Common Mistakes"
+            },
+            de: {
+                calc_title: "Katzen Rohe Ernährung Rechner (BARF) - Genaues Verhältnis", label_weight: "Katzengewicht (kg)", label_age: "Lebensphase", label_activity: "Aktivitätsniveau",
+                opt_adult: "Erwachsene (Erhaltung - 3%)", opt_kitten_old: "Kätzchen (4-12 Mon. - 6%)", opt_kitten_young: "Kätzchen (<4 Mon. - 8%)", opt_senior: "Senior/Diät (2.5%)",
+                act_normal: "Normal", act_high: "Aktiv (hoch)", act_low: "Niedrig (ruhig)",
+                btn_calc: "Berechnen", res_total: "Tägliche Menge",
+                item_muscle: "🥩 Muskelfleisch", item_bone: "🦴 Roher Knochen", item_liver: "🐔 Leber", item_organ: "🧠 Andere Innereien",
+                warning: "⚠️ <strong>Muss hinzugefügt werden:</strong> Taurin, Vitamin E, Fischöl.",
+                sidebar_title: "Empfohlene Lektüre", link_1: "👉 Anfängerleitfaden: BARF", link_2: "👉 5 Häufige Fehler"
+            },
+            es: {
+                calc_title: "Calculadora BARF Gatos", label_weight: "Peso del Gato (kg)", label_age: "Etapa de Vida", label_activity: "Actividad",
+                opt_adult: "Adulto (Mantenimiento - 3%)", opt_kitten_old: "Gatito (4-12 meses - 6%)", opt_kitten_young: "Gatito (<4 meses - 8%)", opt_senior: "Mayor/Dieta (2.5%)",
+                act_normal: "Normal", act_high: "Alta (Activo)", act_low: "Baja (Poco activo)",
+                btn_calc: "Calcular", res_total: "Ingesta Diaria",
+                item_muscle: "🥩 Carne Muscular", item_bone: "🦴 Hueso Carnoso", item_liver: "🐔 Hígado", item_organ: "🧠 Otras Vísceras",
+                warning: "⚠️ <strong>Debe añadir:</strong> Taurina, Vitamina E, Aceite de Pescado.",
+                sidebar_title: "Lectura Recomendada", link_1: "👉 Guía para Principiantes", link_2: "👉 5 Errores Comunes"
+            },
+            ja: {
+                calc_title: "猫用BARF計算機", label_weight: "猫の体重 (kg)", label_age: "ライフステージ", label_activity: "活動レベル",
+                opt_adult: "成猫 (維持期 - 3%)", opt_kitten_old: "子猫 (4-12ヶ月 - 6%)", opt_kitten_young: "子猫 (<4ヶ月 - 8%)", opt_senior: "シニア/ダイエット (2.5%)",
+                act_normal: "普通", act_high: "高い (活発)", act_low: "低い (不活発)",
+                btn_calc: "計算する", res_total: "1日の総給餌量",
+                item_muscle: "🥩 筋肉", item_bone: "🦴 食用骨", item_liver: "🐔 レバー", item_organ: "🧠 その他内臓",
+                warning: "⚠️ <strong>必須添加:</strong> タウリン, ビタミンE, 魚油。",
+                sidebar_title: "おすすめ記事", link_1: "👉 BARF初心者ガイド", link_2: "👉 よくある5つの間違い"
+            },
+            zh: {
+                calc_title: "猫咪 BARF 计算器", label_weight: "猫咪体重 (kg)", label_age: "生命阶段", label_activity: "活动量",
+                opt_adult: "成猫 (维持期 - 3%)", opt_kitten_old: "幼猫 (4-12月 - 6%)", opt_kitten_young: "幼猫 (<4月 - 8%)", opt_senior: "老年猫/减肥中 (2.5%)",
+                act_normal: "正常活动", act_high: "高活动量", act_low: "低活动量",
+                btn_calc: "开始计算", res_total: "每日建议喂食总量",
+                item_muscle: "🥩 肌肉肉", item_bone: "🦴 食用骨", item_liver: "🐔 肝脏", item_organ: "🧠 其他内脏",
+                warning: "⚠️ <strong>必须添加：</strong> 牛磺酸、维生素E、鱼油。",
+                sidebar_title: "新手必读指南", link_1: "👉 新手入门：什么是 BARF？", link_2: "👉 猫咪生骨肉常见的 5 个误区"
+            }
+        };
+
+        const langSwitcher = document.getElementById('langSwitcher');
+
+        function setLanguage(lang) {
+            if (!translations[lang]) lang = 'en';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            langSwitcher.value = lang;
+            localStorage.setItem('purebarf_lang', lang);
+        }
+
+        langSwitcher.addEventListener('change', (e) => setLanguage(e.target.value));
+        const savedLang = localStorage.getItem('purebarf_lang') || 'en'; // English-first default
+        setLanguage(savedLang);
+
+        // Unit toggle (kg / lb) - keep internal calculations in kilograms
+        const unitSelect = document.getElementById('unitSelect');
+        const savedUnit = localStorage.getItem('unit_pref') || 'kg';
+        unitSelect.value = savedUnit;
+
+        function toKg(value, unit) {
+            if (!value) return 0;
+            if (unit === 'lb') return parseFloat(value) / 2.20462;
+            return parseFloat(value);
+        }
+
+        function toDisplay(valueKg, unit) {
+            if (unit === 'lb') return (valueKg * 2.20462).toFixed(2);
+            return valueKg;
+        }
+
+        // Convert displayed input when unit changes
+        unitSelect.addEventListener('change', (e) => {
+            const prev = localStorage.getItem('unit_pref') || 'kg';
+            const next = e.target.value;
+            const inp = document.getElementById('weight');
+            const currentVal = parseFloat(inp.value);
+            if (!isNaN(currentVal)) {
+                // convert between units preserving the same real mass
+                let kgs = toKg(currentVal, prev);
+                const newDisplay = toDisplay(kgs, next);
+                inp.value = newDisplay;
+            }
+            localStorage.setItem('unit_pref', next);
+        });
+
+        // Calc Logic
         function calculateCat() {
             const weight = parseFloat(document.getElementById('weight').value);
             const ageRatio = parseFloat(document.getElementById('age').value);
             const activityMod = parseFloat(document.getElementById('activity').value);
 
-            if (!weight) { alert("Please enter your cat's weight"); return; }
-
-            // Convert from lb -> kg if necessary
-            const unit = document.getElementById('weightUnit').value;
-            let weightKg = weight;
-            if (unit === 'lb') {
-                // 1 lb = 0.45359237 kg
-                weightKg = weight * 0.45359237;
+            if (!weight) { 
+                const msgs = {en: "Enter weight", es: "Ingrese peso", ja: "体重を入力", zh: "请输入体重", de: "Bitte Gewicht eingeben"};
+                alert(msgs[langSwitcher.value] || "Enter weight"); 
+                return; 
             }
 
-            // Calculation logic: weight * base ratio * activity modifier
+            // read unit and convert to kg for calculation
+            const unit = document.getElementById('unitSelect').value || 'kg';
+            const weightKg = toKg(weight, unit);
+
             const totalDaily = weightKg * 1000 * ageRatio * activityMod;
-
-            // BARF composition: muscle/bone/liver/other-organ
-            const muscle = totalDaily * 0.8;
-            const bone = totalDaily * 0.1;
-            const liver = totalDaily * 0.05;
-            const otherOrgan = totalDaily * 0.05;
-
-            // Render results
             document.getElementById('totalFood').innerText = Math.round(totalDaily);
-            document.getElementById('muscleWeight').innerText = Math.round(muscle) + 'g';
-            document.getElementById('boneWeight').innerText = Math.round(bone) + 'g';
-            document.getElementById('liverWeight').innerText = Math.round(liver) + 'g';
-            document.getElementById('otherOrganWeight').innerText = Math.round(otherOrgan) + 'g';
+            document.getElementById('muscleWeight').innerText = Math.round(totalDaily * 0.8) + 'g';
+            document.getElementById('boneWeight').innerText = Math.round(totalDaily * 0.1) + 'g';
+            document.getElementById('liverWeight').innerText = Math.round(totalDaily * 0.05) + 'g';
+            document.getElementById('otherOrganWeight').innerText = Math.round(totalDaily * 0.05) + 'g';
 
             document.getElementById('resultArea').classList.remove('hidden');
         }

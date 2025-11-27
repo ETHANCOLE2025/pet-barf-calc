@@ -3,89 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BARF Feeding Guides &amp; Education — PureBARF</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ads and placeholders removed -->
+        <title>Raw Diet Feeding Guide & Knowledge Base | RawDiet</title>
+        <meta name="description" content="RawDiet knowledge base: practical guides about BARF raw feeding — safety, transitioning, myths, and low-cost tips for healthy cats & dogs." />
+        <meta name="keywords" content="BARF, raw feeding, raw diet, pet nutrition, food safety, transition to raw, raw feeding myths, low cost" />
+        <link rel="canonical" href="./guide.html" />
+        <meta name="robots" content="index,follow" />
+        <!-- Open Graph -->
+        <meta property="og:title" content="Raw Diet Feeding Guide & Knowledge Base | RawDiet" />
+        <meta property="og:description" content="Practical, safe and budget-friendly guides for transitioning pets to BARF raw feeding. Learn food safety, common myths, and more." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="./guide.html" />
+        <meta property="og:site_name" content="RawDiet" />
+        <meta property="og:locale" content="en_US" />
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Raw Diet Feeding Guide & Knowledge Base | RawDiet" />
+        <meta name="twitter:description" content="Practical, safe and budget-friendly guides for transitioning pets to BARF raw feeding." />
+
+        <!-- Structured data (Collection of topic pages) -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "BARF Feeding Guide — RawDiet Knowledge Base",
+            "description": "A collection of beginner-friendly guides, safety tips, transition plans and myth-busting articles about BARF raw feeding for dogs and cats.",
+            "mainEntity": [
+                {"@type":"Article","name":"Beginner: What is BARF?","url":"./topics/beginner-what-is-barf.html"},
+                {"@type":"Article","name":"Top 5 Common Myths About Raw Feeding","url":"./topics/myths-raw-feeding.html"},
+                {"@type":"Article","name":"Low-Cost Feeding Guide: BARF on a Budget","url":"./topics/barf-budget-guide.html"},
+                {"@type":"Article","name":"Food Safety & Hygiene: Handling Raw Meat at Home","url":"./topics/food-safety-raw-meat.html"},
+                {"@type":"Article","name":"How to Transition Your Dog to a Raw Diet Safely","url":"./topics/transition-dog-raw.html"}
+            ]
+        }
+        </script>
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item":"./index.html"},
+                {"@type": "ListItem", "position": 2, "name": "Knowledge Base", "item":"./guide.html"}
+            ]
+        }
+        </script>
+
+        <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-emerald-50 text-gray-800 font-sans">
+<body class="bg-emerald-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
     <nav class="bg-white shadow-md">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-emerald-700">PureBARF 📚</a>
-            <div class="hidden md:flex space-x-6">
-                    <a href="index.html" class="hover:text-emerald-600">Home</a>
-                    <a href="cat-calculator.html" class="hover:text-emerald-600">Cat Calculator</a>
-                    <a href="dog-calculator.html" class="hover:text-emerald-600">Dog Calculator</a>
-            </div>
+            <a href="index.html" class="text-2xl font-bold text-emerald-700">RawDiet 🐾</a>
+            <select id="langSwitcher" class="bg-gray-100 border border-gray-300 text-xs rounded p-1">
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="ja">🇯🇵 JP</option>
+                <option value="zh">🇨🇳 ZH</option>
+            </select>
         </div>
     </nav>
 
-    <header class="bg-emerald-700 text-white py-12 text-center">
-        <h1 class="text-3xl font-bold">BARF Feeding Knowledge Base</h1>
-        <p class="mt-2 opacity-80">Beginner guides, common pitfalls, and nutrition science</p>
+    <header class="bg-emerald-700 text-white py-16 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold" data-i18n="guide_hero_title">Knowledge Base</h1>
+        <p class="mt-4 opacity-80 text-lg" data-i18n="guide_hero_desc">Beginner guides, tips, and nutritional science.</p>
     </header>
 
-    <div class="container mx-auto px-4 py-12">
+    <div class="container mx-auto px-4 py-12 flex-grow">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
             <!-- Article 1 -->
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Article cover image</div>
-                <div class="p-6">
-                            <h2 class="font-bold text-xl mb-2 text-gray-800">Getting Started: What is BARF?</h2>
-                            <p class="text-gray-600 text-sm mb-4">Explore the core concept of Biologically Appropriate Raw Food and why it may be preferable to processed kibble.</p>
-                    <span class="text-emerald-600 font-bold text-sm">Read more &rarr;</span>
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col">
+                <div class="h-48 bg-emerald-100 flex items-center justify-center text-emerald-300 text-5xl">🥩</div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h2 class="font-bold text-xl mb-3 text-gray-900" data-i18n="art1_title">Beginner: What is BARF?</h2>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed" data-i18n="art1_desc">Understand the core concept of Biologically Appropriate Raw Food and why it's better.</p>
+                    <a href="./topics/beginner-what-is-barf.html" rel="noopener noreferrer" aria-label="Read Beginner: What is BARF?" class="mt-auto text-emerald-600 font-bold text-sm hover:underline" data-i18n="read_more">Read Full Article &rarr;</a>
                 </div>
             </article>
 
             <!-- Article 2 -->
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Article cover image</div>
-                <div class="p-6">
-                    <h2 class="font-bold text-xl mb-2 text-gray-800">5 Common BARF Myths for Cats</h2>
-                    <p class="text-gray-600 text-sm mb-4">Is chicken breast enough? Is avoiding bones safer? Learn the common mistakes beginners make.</p>
-                    <span class="text-emerald-600 font-bold text-sm">Read more &rarr;</span>
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col">
+                <div class="h-48 bg-red-50 flex items-center justify-center text-red-200 text-5xl">🚫</div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h2 class="font-bold text-xl mb-3 text-gray-900" data-i18n="art2_title">5 Common Mistakes</h2>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed" data-i18n="art2_desc">Just feeding chicken breast? No bones? Discover the fatal mistakes beginners make.</p>
+                    <a href="./topics/myths-raw-feeding.html" rel="noopener noreferrer" aria-label="Read Top 5 Common Myths About Raw Feeding" class="mt-auto text-emerald-600 font-bold text-sm hover:underline" data-i18n="read_more">Read Full Article &rarr;</a>
                 </div>
             </article>
 
             <!-- Article 3 -->
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Article cover image</div>
-                <div class="p-6">
-                    <h2 class="font-bold text-xl mb-2 text-gray-800">Low-Cost Raw Feeding Tips</h2>
-                    <p class="text-gray-600 text-sm mb-4">How to source reliable meat and keep costs reasonable without sacrificing quality.</p>
-                    <span class="text-emerald-600 font-bold text-sm">Read more &rarr;</span>
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col">
+                <div class="h-48 bg-blue-50 flex items-center justify-center text-blue-200 text-5xl">💰</div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h2 class="font-bold text-xl mb-3 text-gray-900" data-i18n="art3_title">Budget Guide</h2>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed" data-i18n="art3_desc">How to find reliable meat sources and control budget without sacrificing quality.</p>
+                    <a href="./topics/barf-budget-guide.html" rel="noopener noreferrer" aria-label="Read Low-Cost Feeding Guide: BARF on a Budget" class="mt-auto text-emerald-600 font-bold text-sm hover:underline" data-i18n="read_more">Read Full Article &rarr;</a>
                 </div>
             </article>
 
-            <!-- Ads removed -->
-
             <!-- Article 4 -->
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Article cover image</div>
-                <div class="p-6">
-                    <h2 class="font-bold text-xl mb-2 text-gray-800">Does raw feeding require deworming?</h2>
-                    <p class="text-gray-600 text-sm mb-4">Are there parasite risks with raw meat? Learn safe freezing methods and deworming strategies.</p>
-                    <span class="text-emerald-600 font-bold text-sm">Read more &rarr;</span>
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col">
+                <div class="h-48 bg-yellow-50 flex items-center justify-center text-yellow-200 text-5xl">🧼</div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h2 class="font-bold text-xl mb-3 text-gray-900" data-i18n="art4_title">Food Safety & Hygiene</h2>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed" data-i18n="art4_desc">Learn how to safely handle, freeze and store raw meat at home to protect your family and pets.</p>
+                    <a href="./topics/food-safety-raw-meat.html" rel="noopener noreferrer" aria-label="Read Food Safety & Hygiene: Handling Raw Meat at Home" class="mt-auto text-emerald-600 font-bold text-sm hover:underline" data-i18n="read_more">Read Full Article &rarr;</a>
                 </div>
             </article>
 
             <!-- Article 5 -->
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Article cover image</div>
-                <div class="p-6">
-                    <h2 class="font-bold text-xl mb-2 text-gray-800">Essential Supplements Checklist</h2>
-                    <p class="text-gray-600 text-sm mb-4">Taurine, fish oil, vitamin E — which supplements are necessary and which might be optional?</p>
-                    <span class="text-emerald-600 font-bold text-sm">Read more &rarr;</span>
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col">
+                <div class="h-48 bg-purple-50 flex items-center justify-center text-purple-200 text-5xl">🔁</div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h2 class="font-bold text-xl mb-3 text-gray-900" data-i18n="art5_title">Transition to Raw</h2>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed" data-i18n="art5_desc">Step-by-step transition plans to switch your dog to a raw diet safely without digestive upset.</p>
+                    <a href="./topics/transition-dog-raw.html" rel="noopener noreferrer" aria-label="Read How to Transition Your Dog to a Raw Diet Safely" class="mt-auto text-emerald-600 font-bold text-sm hover:underline" data-i18n="read_more">Read Full Article &rarr;</a>
                 </div>
             </article>
 
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm">
-        <p>&copy; 2024 PureBARF. All rights reserved.</p>
-    </footer>
+    <script>
+        const translations = {
+            en: {
+                guide_hero_title: "Knowledge Base", guide_hero_desc: "Beginner guides, tips, and nutritional science.", read_more: "Read Full Article &rarr;",
+                art1_title: "Beginner: What is BARF?", art1_desc: "Understand the core concept of Biologically Appropriate Raw Food and why it's better.",
+                art2_title: "5 Common Mistakes", art2_desc: "Just feeding chicken breast? No bones? Discover the fatal mistakes beginners make.",
+                art3_title: "Budget Guide", art3_desc: "How to find reliable meat sources and control budget without sacrificing quality.",
+                art4_title: "Food Safety & Hygiene", art4_desc: "How to safely handle, freeze and store raw meat at home to protect your family and pets.",
+                art5_title: "How to Transition to Raw", art5_desc: "Step-by-step transition plans and tips so your dog can switch to a raw diet safely without digestive upset."
+            },
+            es: {
+                guide_hero_title: "Base de Conocimiento", guide_hero_desc: "Guías para principiantes, consejos y ciencia nutricional.", read_more: "Leer Artículo &rarr;",
+                art1_title: "Principiante: ¿Qué es BARF?", art1_desc: "Entiende el concepto central de Biologically Appropriate Raw Food y por qué es mejor.",
+                art2_title: "5 Errores Comunes", art2_desc: "¿Solo pechuga de pollo? ¿Sin huesos? Descubre los errores fatales que cometen los principiantes.",
+                art3_title: "Guía de Presupuesto", art3_desc: "Cómo encontrar fuentes de carne confiables y controlar el presupuesto sin sacrificar la calidad.",
+                art4_title: "Seguridad Alimentaria e Higiene", art4_desc: "Cómo manejar, congelar y almacenar carne cruda de forma segura en casa.",
+                art5_title: "Cómo hacer la transición a crudo", art5_desc: "Planes paso a paso para cambiar a una dieta cruda de forma segura sin causar problemas digestivos."
+            },
+            ja: {
+                guide_hero_title: "ナレッジベース", guide_hero_desc: "初心者ガイド、ヒント、そして栄養科学。", read_more: "続きを読む &rarr;",
+                art1_title: "初心者：BARFとは？", art1_desc: "生物学的に適正な生食（BARF）の核心概念と、なぜそれが良いのかを理解しましょう。",
+                art2_title: "よくある5つの間違い", art2_desc: "鶏のささみだけ？骨なし？初心者が犯しがちな致命的な間違いを発見します。",
+                art3_title: "予算ガイド", art3_desc: "品質を犠牲にすることなく、信頼できる肉の供給源を見つけ、予算を管理する方法。",
+                art4_title: "食品安全と衛生", art4_desc: "自宅で生肉を安全に扱い、冷凍・保存する方法を学びましょう。",
+                art5_title: "生食への移行方法", art5_desc: "犬を安全に生食に切り替えるための段階的な方法とヒント。"
+            },
+            zh: {
+                guide_hero_title: "生骨肉知识库", guide_hero_desc: "新手入门、避坑指南与营养学。", read_more: "阅读全文 &rarr;",
+                art1_title: "新手入门：什么是 BARF？", art1_desc: "深入了解 Biologically Appropriate Raw Food 的核心理念，为什么它比猫粮更好？",
+                art2_title: "常见的 5 个误区", art2_desc: "只吃鸡胸肉？不吃骨头？揭秘新手最容易犯的致命错误。",
+                art3_title: "低成本喂养指南", art3_desc: "如何寻找可靠的肉源？如何在保证质量的前提下控制预算？",
+                art4_title: "食品安全与卫生", art4_desc: "如何安全处理、冷冻与储存生肉以保护家人和宠物。",
+                art5_title: "安全地过渡到生骨肉饮食", art5_desc: "逐步过渡计划，帮助你的狗狗平稳适应生食而不引起消化不良。"
+            }
+        };
 
+        const langSwitcher = document.getElementById('langSwitcher');
+        function setLanguage(lang) {
+            if (!translations[lang]) lang = 'en';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            langSwitcher.value = lang;
+            localStorage.setItem('purebarf_lang', lang);
+        }
+        langSwitcher.addEventListener('change', (e) => setLanguage(e.target.value));
+        setLanguage(localStorage.getItem('purebarf_lang') || navigator.language.slice(0, 2));
+    </script>
 </body>
 </html>
