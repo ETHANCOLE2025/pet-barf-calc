@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat BARF (raw) Calculator — PureBARF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ads and placeholders removed -->
+</head>
+<body class="bg-emerald-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-emerald-700">PureBARF 🐱</a>
+            <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="hover:text-emerald-600">Home</a>
+                    <a href="guide.html" class="hover:text-emerald-600">Guides</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left column: calculator core -->
+            <div class="lg:col-span-2">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h1 class="text-2xl font-bold text-emerald-800 mb-6 flex items-center">
+                        <span class="bg-emerald-100 p-2 rounded-full mr-3">🥩</span> 
+                        Cat BARF Feeding Calculator
+                    </h1>
+                    
+                    <form id="catForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Cat weight</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="weight" step="0.1" class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. 4.5">
+                                <select id="weightUnit" class="p-3 border border-gray-300 rounded-lg bg-white">
+                                    <option value="kg">kg</option>
+                                    <option value="lb">lb</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Life stage</label>
+                                <select id="age" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <option value="0.03">Adult (maintenance)</option>
+                                        <option value="0.06">Kitten (growth 4–12 months)</option>
+                                        <option value="0.08">Kitten (rapid growth &lt; 4 months)</option>
+                                        <option value="0.025">Senior / weight loss</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Activity level</label>
+                                <select id="activity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <option value="1">Normal activity</option>
+                                    <option value="1.1">High activity (energetic / intact)</option>
+                                    <option value="0.9">Low activity (sedentary / spayed/neutered)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="calculateCat()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition transform active:scale-95">Calculate</button>
+                    </form>
+
+                        <!-- Results display area -->
+                    <div id="resultArea" class="hidden mt-8 border-t pt-6 animate-fade-in">
+                        <!-- Inline ads removed -->
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Daily recommended total: <span id="totalFood" class="text-emerald-600 text-3xl">0</span> g</h3>
+                        <p class="text-sm text-gray-500 mb-4">Recommend splitting into 2–3 meals daily</p>
+
+                        <!-- Composition cards -->
+                        <div class="space-y-3">
+                            <!-- Muscle -->
+                            <div class="bg-red-50 p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-red-800 block">🥩 Muscle (80%)</span>
+                                    <span class="text-xs text-red-600">Includes heart, breast, duck leg, etc.</span>
+                                </div>
+                                <span id="muscleWeight" class="text-xl font-bold text-red-700">0g</span>
+                            </div>
+                            <!-- Bone -->
+                            <div class="bg-yellow-50 p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-yellow-800 block">🦴 Edible bone (10%)</span>
+                                    <span class="text-xs text-yellow-600">E.g. chicken necks, wing middles — mainly bone content</span>
+                                </div>
+                                <span id="boneWeight" class="text-xl font-bold text-yellow-700">0g</span>
+                            </div>
+                            <!-- Liver -->
+                            <div class="bg-purple-50 p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-purple-800 block">🐔 Liver (5%)</span>
+                                    <span class="text-xs text-purple-600">Chicken liver, duck liver</span>
+                                </div>
+                                <span id="liverWeight" class="text-xl font-bold text-purple-700">0g</span>
+                            </div>
+                            <!-- Other organs -->
+                            <div class="bg-blue-50 p-4 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-blue-800 block">🧠 Other organs (5%)</span>
+                                    <span class="text-xs text-blue-600">Kidney, spleen, pancreas</span>
+                                </div>
+                                <span id="otherOrganWeight" class="text-xl font-bold text-blue-700">0g</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-4 bg-yellow-100 rounded text-sm text-yellow-800">
+                            <strong>⚠️ Important supplements:</strong> Taurine, vitamin E, fish oil. For long-term feeding consider iodine (kelp powder) and manganese.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right sidebar content (ads removed) -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-gray-700 mb-3">Recommended</h3>
+                    <!-- Sidebar ads removed -->
+                </div>
+                
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-gray-700 mb-3">Read more</h3>
+                    <ul class="space-y-2 text-sm text-emerald-700">
+                        <li><a href="#" class="hover:underline">👉 Why isn't my cat drinking water?</a></li>
+                        <li><a href="#" class="hover:underline">👉 Beginner's guide to cutting meat</a></li>
+                        <li><a href="#" class="hover:underline">👉 Common supplements checklist</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm mt-auto">
+        <p>This calculator is for reference only; follow your veterinarian's guidance.</p>
+    </footer>
+
+    <script>
+        function calculateCat() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const ageRatio = parseFloat(document.getElementById('age').value);
+            const activityMod = parseFloat(document.getElementById('activity').value);
+
+            if (!weight) { alert("Please enter your cat's weight"); return; }
+
+            // Convert from lb -> kg if necessary
+            const unit = document.getElementById('weightUnit').value;
+            let weightKg = weight;
+            if (unit === 'lb') {
+                // 1 lb = 0.45359237 kg
+                weightKg = weight * 0.45359237;
+            }
+
+            // Calculation logic: weight * base ratio * activity modifier
+            const totalDaily = weightKg * 1000 * ageRatio * activityMod;
+
+            // BARF composition: muscle/bone/liver/other-organ
+            const muscle = totalDaily * 0.8;
+            const bone = totalDaily * 0.1;
+            const liver = totalDaily * 0.05;
+            const otherOrgan = totalDaily * 0.05;
+
+            // Render results
+            document.getElementById('totalFood').innerText = Math.round(totalDaily);
+            document.getElementById('muscleWeight').innerText = Math.round(muscle) + 'g';
+            document.getElementById('boneWeight').innerText = Math.round(bone) + 'g';
+            document.getElementById('liverWeight').innerText = Math.round(liver) + 'g';
+            document.getElementById('otherOrganWeight').innerText = Math.round(otherOrgan) + 'g';
+
+            document.getElementById('resultArea').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
